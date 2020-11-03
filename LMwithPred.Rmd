@@ -42,9 +42,11 @@ basicNN + geom_point() + geom_smooth(method=lm)
 ```{r}
 model.1 <- lm(SIMS~ARM,data=dataF)
 summary.lm(model.1)
+new=data.frame(GRIP=94,ARM=88)
+predict.lm(model.1,new,interval = "prediction")
 ```
 
-## Model 2 
+##  
 ```{r}
 plot(SIMS~GRIP,data=dataF)
 ```
@@ -56,12 +58,15 @@ basicNN <- ggplot(dataF,aes(y=SIMS,x=GRIP))
 ```{r}
 basicNN + geom_point() + geom_smooth(method=lm)
 ```
+
 ```{r}
 model.2 <- lm(SIMS~GRIP,data=dataF)
 summary.lm(model.2)
+predict.lm(model.2,new,interval = "prediction")
 ``` 
 
 ```{r}
 model.3 <- lm(SIMS~ARM+GRIP,data=dataF)
 summary.lm(model.3)
+predict.lm(model.3,new,interval = "prediction")
 ```
