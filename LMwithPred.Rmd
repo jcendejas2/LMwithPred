@@ -24,6 +24,9 @@ require(knitr)
 require(ggplot)
 ```
 
+$H_O$: The null hypothesis states that there is no difference in these models; either one is just as good as the other.  
+$H_A$: The alternative hypothesis states that there is a difference in these models; one is better than the others.  
+
 ### Plot Scatterplot
 
 ```{r}
@@ -70,3 +73,10 @@ model.3 <- lm(SIMS~ARM+GRIP,data=dataF)
 summary.lm(model.3)
 predict.lm(model.3,new,interval = "prediction")
 ```
+
+```{r}
+anova(model.1,model.3)
+```
+
+## Conclusion
+Based on the p-value which is 0.000004, we reject the null hypothesis and conclude as we saw with the adjusted r-squared that model 2 is the better predictor than model 1.
