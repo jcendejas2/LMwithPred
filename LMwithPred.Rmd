@@ -10,12 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction  
-This is the linear model with prediction problem. Predict strength scores using data from the following website  
+This is the linear model with prediction problem. Predicting simulated strength score on arm strength and grip strength. 
 
 ```{r}
 dataF <- read.csv(file="http://onlinestatbook.com/case_studies_rvls/physical_strength/data.txt", sep="", header=TRUE)
 ```
 
+ 
 ```{r include=FALSE}
 require(tidyverse)
 require(tigerstats)
@@ -27,11 +28,17 @@ require(ggplot)
 $H_O$: The null hypothesis states that there is no difference in these models; either one is just as good as the other.  
 $H_A$: The alternative hypothesis states that there is a difference in these models; one is better than the others.  
 
+# Model 1 
+
+Scatterplot SIMS is a function of ARM.   
+
 ### Plot Scatterplot
 
 ```{r}
 plot(SIMS~ARM,data=dataF)
 ```
+
+This chart displays the stronger your arm strength is the higher the simulated score is.  
 
 ```{r}
 basicNN <- ggplot(dataF,aes(y=SIMS,x=ARM))
@@ -49,10 +56,18 @@ new=data.frame(GRIP=94,ARM=88)
 predict.lm(model.1,new,interval = "prediction")
 ```
 
-##  
+This is a linear model of SIMS based on ARM strength. The adjusted R-squared is equal to 0.467.  
+
+# Model 2  
+
+Scatterplot SIMS is a function of GRIP.  
+
 ```{r}
 plot(SIMS~GRIP,data=dataF)
 ```
+
+This chart displays the stronger your grip is the higher the simulated score is.
+
 ```{r}
 basicNN <- ggplot(dataF,aes(y=SIMS,x=GRIP))
 ```
@@ -68,11 +83,19 @@ summary.lm(model.2)
 predict.lm(model.2,new,interval = "prediction")
 ``` 
 
+This is a linear model of SIMS based on GRIP strength. The adjusted R-squared is equal to 0.4053 which is smaller than the arm strength. In this case model 1 is better than model 2 because is has a bigger adjusted r-squared.    
+
+# Model 3
+
+Predict SIMS is a function of both ARM + GRIP.  
+
 ```{r}
 model.3 <- lm(SIMS~ARM+GRIP,data=dataF)
 summary.lm(model.3)
 predict.lm(model.3,new,interval = "prediction")
 ```
+
+This is a linear model of SIMS based on ARM + GRIP strength. The adjusted R-squared is equal to 0.5358. In this case model 3 is better than model 1 because is has a bigger adjusted r-squared.  
 
 ```{r}
 anova(model.1,model.3)
